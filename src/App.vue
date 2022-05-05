@@ -9,8 +9,8 @@
             class="docker__item"
             v-for="(item, index) in dockerList"
             :key="item.iconName"
-            :class="{'docker__item--active': index === 0}"
-            @click="switchTabs(item.path)"
+            :class="{'docker__item--active': currentIndex === index}"
+            @click="switchTabs(item.path, index)"
         >
             <span
                 class="docker__item__icon iconfont"
@@ -23,6 +23,7 @@
 
 <script>
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 export default {
     setup () {
@@ -34,11 +35,13 @@ export default {
         ]
 
         const router = useRouter()
-        const switchTabs = (path) => {
+        const currentIndex = ref(0)
+        const switchTabs = (path, index) => {
+            currentIndex.value = index
             router.push(path)
         }
 
-        return { dockerList, switchTabs }
+        return { dockerList, switchTabs, currentIndex }
     }
 }
 </script>
