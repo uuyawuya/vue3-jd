@@ -1,4 +1,8 @@
 <template>
+    <div class="content">
+        <router-view />
+    </div>
+
     <div class="docker">
         <!-- BEM CSS命名规范 -->
         <div
@@ -6,6 +10,7 @@
             v-for="(item, index) in dockerList"
             :key="item.iconName"
             :class="{'docker__item--active': index === 0}"
+            @click="switchTabs(item.path)"
         >
             <span
                 class="docker__item__icon iconfont"
@@ -17,21 +22,38 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
+
 export default {
     setup () {
         const dockerList = [
-            { iconName: 'icon-shouye', text: '首页' },
-            { iconName: 'icon-gouwuche', text: '购物车' },
-            { iconName: 'icon-wodedingdan', text: '订单' },
-            { iconName: 'icon-wodejuhuasuan', text: '我的' }
+            { iconName: 'icon-shouye', text: '首页', path: '/home' },
+            { iconName: 'icon-gouwuche', text: '购物车', path: '/cart' },
+            { iconName: 'icon-wodedingdan', text: '订单', path: '/order' },
+            { iconName: 'icon-wodejuhuasuan', text: '我的', path: '/user' }
         ]
 
-        return { dockerList }
+        const router = useRouter()
+        const switchTabs = (path) => {
+            router.push(path)
+        }
+
+        return { dockerList, switchTabs }
     }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.content {
+    background-color: #1fa4fc;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0.5rem;
+    overflow: hidden;
+}
+
 .docker {
     display: flex;
     position: absolute;
