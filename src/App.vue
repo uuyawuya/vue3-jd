@@ -1,24 +1,35 @@
 <template>
     <div class="docker">
         <!-- BEM CSS命名规范 -->
-        <div class="docker__item docker__item--active">
-            <span class="docker__item__icon iconfont icon-shouye"></span>
-            <span class="docker__item__title">首页</span>
-        </div>
-        <div class="docker__item">
-            <span class="docker__item__icon iconfont icon-gouwuche"></span>
-            <span class="docker__item__title">购物车</span>
-        </div>
-        <div class="docker__item">
-            <span class="docker__item__icon iconfont icon-wodedingdan"></span>
-            <span class="docker__item__title">订单</span>
-        </div>
-        <div class="docker__item">
-            <span class="docker__item__icon iconfont icon-wodejuhuasuan"></span>
-            <span class="docker__item__title">我的</span>
+        <div
+            class="docker__item"
+            v-for="(item, index) in dockerList"
+            :key="item.iconName"
+            :class="{'docker__item--active': index === 0}"
+        >
+            <span
+                class="docker__item__icon iconfont"
+                :class="item.iconName"
+            ></span>
+            <span class="docker__item__title">{{item.text}}</span>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    setup () {
+        const dockerList = [
+            { iconName: 'icon-shouye', text: '首页' },
+            { iconName: 'icon-gouwuche', text: '购物车' },
+            { iconName: 'icon-wodedingdan', text: '订单' },
+            { iconName: 'icon-wodejuhuasuan', text: '我的' }
+        ]
+
+        return { dockerList }
+    }
+}
+</script>
 
 <style lang="scss">
 .docker {
